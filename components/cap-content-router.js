@@ -28,9 +28,6 @@ export default class CapContentRouter extends LitElement {
 				.filter((component) => component.length > 0);
 
 			switch (hashComponents.length) {
-				case 0:
-					return html`<cap-reporters></cap-reporters>`;
-					break;
 				case 1:
 					return html`<cap-volumes
 						reporter=${hashComponents[0]}
@@ -50,8 +47,7 @@ export default class CapContentRouter extends LitElement {
 					></cap-case>`;
 					break;
 				default:
-					console.log(hashComponents);
-					throw new Error("Not Found.");
+					return html`<cap-reporters></cap-reporters>`;
 					break;
 			}
 		} else {
