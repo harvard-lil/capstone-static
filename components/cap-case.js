@@ -25,7 +25,6 @@ export default class CapCase extends LitElement {
 	}
 
 	render() {
-		console.log(this.caseBody);
 		return html`${unsafeHTML(this.caseBody)}`;
 	}
 }
