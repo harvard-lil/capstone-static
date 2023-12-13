@@ -1,5 +1,7 @@
 import { LitElement, html, css, unsafeHTML } from "../lib/lit.js";
 
+import { fetchCaselawBody } from "../lib/data.js";
+
 export default class CapCase extends LitElement {
 	static properties = {
 		caseBody: { attribute: false },
@@ -15,13 +17,7 @@ export default class CapCase extends LitElement {
 
 	connectedCallback() {
 		super.connectedCallback();
-		this.fetchCaselawBody();
-	}
-
-	async fetchCaselawBody() {
-		const url = `${BUCKET_ROOT}/${this.reporter}/${this.volume}/html/${this.case}-01.html`;
-		const response = await fetch(url);
-		this.caseBody = await response.text();
+		fetchCaselawBody(this.reporter, this.volume, this.case, this);
 	}
 
 	render() {

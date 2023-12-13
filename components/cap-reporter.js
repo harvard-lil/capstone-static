@@ -1,34 +1,23 @@
 import { LitElement, html, css } from "../lib/lit.js";
+import { fetchVolumesData, fetchReporterData } from "../lib/data.js";
 
-export default class CapVolumes extends LitElement {
+export default class CapReporter extends LitElement {
 	static properties = {
-		volumes: { attribute: false },
+		volumesData: { attribute: false },
 		reporterData: { attribute: false },
 		reporter: { type: String },
 	};
 
 	constructor() {
 		super();
-		this.volumes = [];
+		this.volumesData = [];
 		this.reporterData = {};
 	}
 
 	connectedCallback() {
 		super.connectedCallback();
-		this.fetchVolumes();
-		this.fetchReporterData();
-	}
-
-	async fetchReporterData() {
-		const url = `${BUCKET_ROOT}/${this.reporter}/ReporterMetadata.json`;
-		const response = await fetch(url);
-		this.reporterData = await response.json();
-	}
-
-	async fetchVolumes() {
-		const url = `${BUCKET_ROOT}/${this.reporter}/VolumesMetadata.json`;
-		const response = await fetch(url);
-		this.volumes = await response.json();
+		fetchVolumesData(this.reporter, this);
+		fetchReporterData(this.reporter, this);
 	}
 
 	render() {
@@ -40,12 +29,14 @@ export default class CapVolumes extends LitElement {
 			</h2>
 			Volume number:
 			<ul>
-				${this.volumes
+				${this.volumesData
 					.sort((a, b) => a.volume_number - b.volume_number)
 					.map(
 						(v) =>
 							html`<li>
-								<a href="#!/${this.reporter}/${v.volume_number}"
+								<a
+									href="/caselaw.html?reporter=${this
+										.reporter}&volume=${v.volume_number}"
 									>${v.volume_number}</a
 								>
 							</li>`
@@ -55,4 +46,4 @@ export default class CapVolumes extends LitElement {
 	}
 }
 
-customElements.define("cap-volumes", CapVolumes);
+customElements.define("cap-reporter", CapReporter);
