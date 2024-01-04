@@ -1,7 +1,7 @@
 export const navLinks = [
 	{
 		name: "Caselaw",
-		path: "/caselaw",
+		path: "caselaw.html",
 	},
 	{
 		name: "Docs",
