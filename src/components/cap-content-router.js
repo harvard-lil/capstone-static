@@ -12,24 +12,26 @@ export default class CapContentRouter extends LitElement {
 		const volume = searchParams.get("volume");
 		const caseName = searchParams.get("case");
 
-		if (caseName === null && volume === null && reporter === null) {
-			return html`<cap-jurisdictions></cap-jurisdictions>`;
-		} else if (caseName === null && volume === null && !!reporter) {
-			return html`<cap-reporter reporter=${reporter}></cap-reporter>`;
-		} else if (caseName === null && !!volume && !!reporter) {
-			return html`<cap-volume
-				reporter=${reporter}
-				volume=${volume}
-			></cap-volume>`;
-		} else if (!!caseName && !!volume && !!reporter) {
+		if (!!caseName && !!volume && !!reporter) {
 			return html`<cap-case
 				reporter=${reporter}
 				volume=${volume}
 				case=${caseName}
 			></cap-case>`;
-		} else {
-			return html`<cap-jurisdictions></cap-jurisdictions>`;
 		}
+
+		if (!!volume && !!reporter) {
+			return html`<cap-volume
+				reporter=${reporter}
+				volume=${volume}
+			></cap-volume>`;
+		}
+
+		if (!!reporter) {
+			return html`<cap-reporter reporter=${reporter}></cap-reporter>`;
+		}
+
+		return html`<cap-jurisdictions></cap-jurisdictions>`;
 	}
 }
 
