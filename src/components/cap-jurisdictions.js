@@ -18,13 +18,12 @@ export default class CapJurisdictions extends LitElement {
 
 	render() {
 		return html`
-			<ul>
+			<article>
 				${Object.keys(this.jurisdictionsData)
 					.sort()
 					.map(
 						(jurisdiction) =>
-							html`<li>
-								<h2>${jurisdiction}</h2>
+							html`<h2>${jurisdiction}</h2>
 								<ul>
 									${this.jurisdictionsData[jurisdiction].map(
 										(reporter) => html`<li>
@@ -34,10 +33,9 @@ export default class CapJurisdictions extends LitElement {
 											(${reporter.start_year}-${reporter.end_year})
 										</li>`
 									)}
-								</ul>
-							</li>`
+								</ul>`
 					)}
-			</ul>
+			</article>
 		`;
 	}
 }
