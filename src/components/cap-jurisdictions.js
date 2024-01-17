@@ -13,7 +13,7 @@ export default class CapJurisdictions extends LitElement {
 
 	connectedCallback() {
 		super.connectedCallback();
-		fetchJurisdictionsData(this);
+		fetchJurisdictionsData((data) => (this.jurisdictionsData = data));
 	}
 
 	render() {

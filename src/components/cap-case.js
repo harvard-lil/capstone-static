@@ -17,7 +17,12 @@ export default class CapCase extends LitElement {
 
 	connectedCallback() {
 		super.connectedCallback();
-		fetchCaselawBody(this.reporter, this.volume, this.case, this);
+		fetchCaselawBody(
+			this.reporter,
+			this.volume,
+			this.case,
+			(data) => (this.caseBody = data)
+		);
 	}
 
 	render() {

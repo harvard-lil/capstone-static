@@ -14,24 +14,15 @@
 		<meta property="og:site_name" content="Caselaw Access Projects" />
 
 		<link href="/css/global.css" rel="stylesheet" />
-		<script type="module" src="/components/cap-map.js"></script>
-		<script type="module" src="/components/cap-header.js"></script>
-		<script type="module" src="/components/cap-stats.js"></script>
-		<script type="module" src="/components/cap-section-highlight.js"></script>
-		<script type="module" src="/components/cap-contact.js"></script>
-		<script type="module" src="/components/cap-footer.js"></script>
 		<script type="module" src="/components/cap-content-router.js"></script>
-		<script type="module" src="/components/cap-case.js"></script>
-		<script type="module" src="/components/cap-volume.js"></script>
-		<script type="module" src="/components/cap-jurisdictions.js"></script>
-		<script type="module" src="/components/cap-reporter.js"></script>
-
+		<script type="module" src="/components/cap-footer.js"></script>
+		<script type="module" src="/components/cap-nav.js"></script>
 		<script>
-			var BUCKET_ROOT = "https://cap-redacted-demo.s3.us-west-2.amazonaws.com";	
+			window.BUCKET_ROOT = "https://cap-redacted-demo.s3.us-west-2.amazonaws.com";	
 		</script>
 	</head>
 	<body>
-		<cap-header></cap-header>
+		<cap-nav></cap-nav>
 		<main id="main">
 	        <cap-content-router></cap-content-router>
 			<cap-footer></cap-footer>

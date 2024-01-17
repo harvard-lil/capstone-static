@@ -1,5 +1,5 @@
-export const fetchJurisdictionsData = async (target) => {
-	const url = `${BUCKET_ROOT}/ReportersMetadata.json`;
+export const fetchJurisdictionsData = async (callback) => {
+	const url = `${window.BUCKET_ROOT}/ReportersMetadata.json`;
 	const data = await fetchJson(url);
 	const jurisdictions = {};
 	data.forEach((element) => {
@@ -9,34 +9,39 @@ export const fetchJurisdictionsData = async (target) => {
 		}
 		jurisdictions[jurisdiction].push(element);
 	});
-	target.jurisdictionsData = jurisdictions;
+	callback(jurisdictions);
 };
 
-export const fetchReporterData = async (reporter, target) => {
-	const url = `${BUCKET_ROOT}/${reporter}/ReporterMetadata.json`;
-	target.reporterData = await fetchJson(url);
+export const fetchReporterData = async (reporter, callback) => {
+	const url = `${window.BUCKET_ROOT}/${reporter}/ReporterMetadata.json`;
+	callback(await fetchJson(url));
 };
 
-export const fetchVolumesData = async (reporter, target) => {
-	const url = `${BUCKET_ROOT}/${reporter}/VolumesMetadata.json`;
-	target.volumesData = await fetchJson(url);
+export const fetchVolumesData = async (reporter, callback) => {
+	const url = `${window.BUCKET_ROOT}/${reporter}/VolumesMetadata.json`;
+	callback(await fetchJson(url));
 };
 
-export const fetchVolumeData = async (reporter, volume, target) => {
-	const url = `${BUCKET_ROOT}/${reporter}/${volume}/VolumeMetadata.json`;
+export const fetchVolumeData = async (reporter, volume, callback) => {
+	const url = `${window.BUCKET_ROOT}/${reporter}/${volume}/VolumeMetadata.json`;
 	const response = await fetch(url);
-	target.volumeData = await response.json();
+	callback(await response.json());
 };
 
-export const fetchCasesList = async (reporter, volume, target) => {
-	const url = `${BUCKET_ROOT}/${reporter}/${volume}/CasesMetadata.json`;
-	target.casesData = await fetchJson(url);
+export const fetchCasesList = async (reporter, volume, callback) => {
+	const url = `${window.BUCKET_ROOT}/${reporter}/${volume}/CasesMetadata.json`;
+	callback(await fetchJson(url));
 };
 
-export const fetchCaselawBody = async (reporter, volume, caseName, target) => {
-	const url = `${BUCKET_ROOT}/${reporter}/${volume}/html/${caseName}-01.html`;
+export const fetchCaselawBody = async (
+	reporter,
+	volume,
+	caseName,
+	callback
+) => {
+	const url = `${window.BUCKET_ROOT}/${reporter}/${volume}/html/${caseName}-01.html`;
 	const response = await fetch(url);
-	target.caseBody = await response.text();
+	callback(await response.text());
 };
 
 const fetchJson = async (url) => {
