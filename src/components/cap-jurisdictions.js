@@ -18,24 +18,24 @@ export default class CapJurisdictions extends LitElement {
 
 	render() {
 		return html`
-			<article>
-				${Object.keys(this.jurisdictionsData)
-					.sort()
-					.map(
-						(jurisdiction) =>
-							html`<h2>${jurisdiction}</h2>
-								<ul>
-									${this.jurisdictionsData[jurisdiction].map(
-										(reporter) => html`<li>
-											<a href="/caselaw.html?reporter=${reporter.slug}"
-												>${reporter.short_name}</a
-											>: ${reporter.full_name}
-											(${reporter.start_year}-${reporter.end_year})
-										</li>`
-									)}
-								</ul>`
-					)}
-			</article>
+			${Object.keys(this.jurisdictionsData)
+				.sort()
+				.map(
+					(jurisdiction) =>
+						html`<article>
+							<h2>${jurisdiction}</h2>
+							<ul>
+								${this.jurisdictionsData[jurisdiction].map(
+									(reporter) => html`<li>
+										<a href="/caselaw.html?reporter=${reporter.slug}"
+											>${reporter.short_name}</a
+										>: ${reporter.full_name}
+										(${reporter.start_year}-${reporter.end_year})
+									</li>`
+								)}
+							</ul>
+						</article>`
+				)}
 		`;
 	}
 }
