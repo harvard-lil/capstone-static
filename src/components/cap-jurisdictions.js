@@ -27,7 +27,7 @@ export default class CapJurisdictions extends LitElement {
 							<ul>
 								${this.jurisdictionsData[jurisdiction].map(
 									(reporter) => html`<li>
-										<a href="/caselaw.html?reporter=${reporter.slug}"
+										<a href="/caselaw/?reporter=${reporter.slug}"
 											>${reporter.short_name}</a
 										>: ${reporter.full_name}
 										(${reporter.start_year}-${reporter.end_year})

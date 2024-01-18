@@ -50,7 +50,7 @@ export default class CapVolume extends LitElement {
 					(c) =>
 						html`<li>
 							<a
-								href="/caselaw.html?reporter=${this.reporter}&volume=${this
+								href="/caselaw/?reporter=${this.reporter}&volume=${this
 									.volume}&case=${String(c.first_page).padStart(4, "0")}"
 							>
 								${c.name_abbreviation},
