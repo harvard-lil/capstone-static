@@ -1,10 +1,11 @@
 import { LitElement, html, css, unsafeHTML } from "../lib/lit.js";
 
-import { fetchCaselawBody } from "../lib/data.js";
+import { fetchCaselawBody, fetchCaseMetadata } from "../lib/data.js";
 
 export default class CapCase extends LitElement {
 	static properties = {
 		caseBody: { attribute: false },
+		caseMetadata: { attribute: false },
 		reporter: { type: String },
 		volume: { type: String },
 		case: { type: String },
@@ -13,6 +14,7 @@ export default class CapCase extends LitElement {
 	constructor() {
 		super();
 		this.caseBody = "";
+		this.caseMetadata = {};
 	}
 
 	connectedCallback() {
@@ -22,6 +24,13 @@ export default class CapCase extends LitElement {
 			this.volume,
 			this.case,
 			(data) => (this.caseBody = data)
+		);
+
+		fetchCaseMetadata(
+			this.reporter,
+			this.volume,
+			this.case,
+			(data) => (this.caseMetadata = data)
 		);
 	}
 

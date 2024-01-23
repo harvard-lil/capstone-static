@@ -39,9 +39,23 @@ export const fetchCaselawBody = async (
 	caseName,
 	callback
 ) => {
+	// TODO this is a hack to get around the fact that we don't have the case ordinal yet.
+	// See: ENG-522, ENG-523, ENG-533, and ENG-558
 	const url = `${window.BUCKET_ROOT}/${reporter}/${volume}/html/${caseName}-01.html`;
 	const response = await fetch(url);
 	callback(await response.text());
+};
+
+export const fetchCaseMetadata = async (
+	reporter,
+	volume,
+	caseName,
+	callback
+) => {
+	// TODO this is a hack to get around the fact that we don't have the case ordinal yet.
+	// See: ENG-522, ENG-523, ENG-533, and ENG-558
+	const url = `${window.BUCKET_ROOT}/${reporter}/${volume}/cases/${caseName}-01.json`;
+	callback(await fetchJson(url));
 };
 
 const fetchJson = async (url) => {
