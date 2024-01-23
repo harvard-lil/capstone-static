@@ -425,9 +425,10 @@ export default class CapCase extends LitElement {
 		const rewriteLinks = () => {
 			this.shadowRoot.querySelectorAll("a").forEach((a) => {
 				const oldLink = a.getAttribute("href");
-				//todo we need to fix this when ENG-523 happens
-				// (and we should make sure we don't break footnotes when we do)
-				a.href = oldLink + "#todo";
+				// skip links without hrefs or that point back at the same page
+				if (!!oldLink && !oldLink.startsWith("#")) {
+					a.href = oldLink + "#todo";
+				}
 			});
 		};
 		window.requestAnimationFrame(doNothing);
