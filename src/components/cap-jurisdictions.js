@@ -103,6 +103,34 @@ export default class CapJurisdictions extends LitElement {
 	connectedCallback() {
 		super.connectedCallback();
 		fetchJurisdictionsData((data) => (this.jurisdictionsData = data));
+		window.addEventListener("hashchange", this.handleHashChange.bind(this));
+	}
+
+	disconnectedCallback() {
+		super.disconnectedCallback();
+		window.removeEventListener("hashchange", this.handleHashChange.bind(this));
+	}
+
+	/*
+	 In order to preserve encapsulation in the shadow DOM, we need to recreate
+	 the ability to navigate to the anchor tags for each jurisidiction.
+	 Potentially we could have rendered to the window's DOM, but that will be 
+	 potentially problematic when we have to render case HTML, so I started 
+	 using this pattern here.
+	*/
+	handleHashChange() {
+		const hash = window.location.hash.substring(1); // remove the '#'
+		const element = this.shadowRoot.getElementById(hash);
+		if (element) {
+			element.scrollIntoView();
+		}
+	}
+
+	slugify(str) {
+		return str
+			.toLowerCase()
+			.replace(/ /g, "-")
+			.replace(/[^\w-]+/g, "");
 	}
 
 	render() {
@@ -120,7 +148,10 @@ export default class CapJurisdictions extends LitElement {
 						.sort()
 						.map(
 							(jurisdiction) =>
-								html`<article class="jurisdiction">
+								html`<article
+									class="jurisdiction"
+									id="${this.slugify(jurisdiction)}"
+								>
 									<h2 class="jurisdiction__heading">${jurisdiction}</h2>
 									<ul class="jurisdiction__reporterList">
 										${this.jurisdictionsData[jurisdiction].map(
