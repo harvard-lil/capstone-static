@@ -30,7 +30,26 @@ export const fetchVolumeData = async (reporter, volume, callback) => {
 
 export const fetchCasesList = async (reporter, volume, callback) => {
 	const url = `${window.BUCKET_ROOT}/${reporter}/${volume}/CasesMetadata.json`;
-	callback(await fetchJson(url));
+	const rawJson = await fetchJson(url);
+
+	// This sets the ordinal property on each case to the order in which it appears on the page.
+	// Usually 1 because there's only one case starting on a page.
+	const combined = new Map();
+	rawJson.forEach((element) => {
+		if (combined.has(element.first_page)) {
+			combined.get(element.first_page).push(element);
+		} else {
+			combined.set(element.first_page, [element]);
+		}
+	});
+	for (const key of combined.keys()) {
+		let index = 0;
+		for (const element of combined.get(key)) {
+			index += 1;
+			element.ordinal = index;
+		}
+	}
+	callback(rawJson);
 };
 
 export const fetchCaselawBody = async (

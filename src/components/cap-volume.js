@@ -102,7 +102,6 @@ export default class CapVolume extends LitElement {
 	}
 
 	render() {
-		//todo this will need to be updated to deal with multiple cases on the same page
 		window.document.title = `Volume: ${this.reporterData.short_name} volume ${this.volume} | Caselaw Access Project`;
 		return html`
 			<cap-caselaw-layout>
@@ -123,7 +122,10 @@ export default class CapVolume extends LitElement {
 								html`<li>
 									<a
 										href="/caselaw/?reporter=${this.reporter}&volume=${this
-											.volume}&case=${String(c.first_page).padStart(4, "0")}"
+											.volume}&case=${String(c.first_page).padStart(
+											4,
+											"0",
+										)}-${String(c.ordinal).padStart(2, "0")}"
 									>
 										${c.name_abbreviation},
 										${c.citations.filter((c) => c.type == "official")[0].cite}

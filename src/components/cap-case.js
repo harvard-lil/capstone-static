@@ -432,10 +432,13 @@ export default class CapCase extends LitElement {
 			if (oldUrl.hostname === "cite.case.law") {
 				const pathComponents = oldUrl.pathname
 					.split("/")
-					.filter((x) => x !== ""); // remove empty strings
+					// remove empty strings. Deals with paths that start
+					// or end with / and double slashes
+					.filter((x) => x !== "");
 				if (pathComponents.length === 3) {
 					/*
-					Case: https://cite.case.law/ill-app-3d/16/850/
+					Case: /reporter/volume/page
+					E.g.: https://cite.case.law/ill-app-3d/16/850/
 					This represents a citation to a particular page
 					where only one case starts.
 					*/
@@ -449,7 +452,8 @@ export default class CapCase extends LitElement {
 					return;
 				} else if (pathComponents.length === 4) {
 					/*
-					Case: https://cite.case.law/mass/400/1006/880059/
+					Case: /reporter/volume/page/caseId
+					E.g.: https://cite.case.law/mass/400/1006/880059/
 					This represents a citation to a particular page
 					where more than one case begins, so an
 					additional disambiguating suffix is added to
@@ -464,25 +468,19 @@ export default class CapCase extends LitElement {
 							try {
 								resolve(data);
 							} catch (e) {
-								console.log("Couldn't look this one up.");
 								reject(e);
 							}
 						});
 					}).then(
 						(casesList) => {
-							// find all the cases that begin on this page
-							const casesOnPage = casesList.filter(
-								(x) => x.first_page === page,
-							);
-
-							//find the index in the casesOn page of the case we're looking for
-							const index = casesOnPage.findIndex(
+							// Find the one with the correct case id
+							const citedCase = casesList.find(
 								(x) => x.id.toString() === caseId,
 							);
 
 							// construct the proper link to the case
 							const newUrl = new URL(
-								`/caselaw/?reporter=${reporter}&volume=${volume}&case=${page.padStart(4, "0")}-${(index + 1).toString().padStart(2, "0")}`,
+								`/caselaw/?reporter=${reporter}&volume=${volume}&case=${page.padStart(4, "0")}-${citedCase.ordinal.toString().padStart(2, "0")}`,
 								window.location,
 							);
 
@@ -509,7 +507,7 @@ export default class CapCase extends LitElement {
 					return;
 				}
 			}
-			// We don't know what this url is, so leave it be.
+			// If we're here, we don't know what this url is, so leave it be.
 		});
 	};
 
