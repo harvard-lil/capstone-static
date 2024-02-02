@@ -1,6 +1,10 @@
 import { LitElement, html, css, unsafeHTML, nothing } from "../lib/lit.js";
 
-import { fetchCaselawBody, fetchCaseMetadata } from "../lib/data.js";
+import {
+	fetchCaselawBody,
+	fetchCaseMetadata,
+	fetchCasesList,
+} from "../lib/data.js";
 
 export default class CapCase extends LitElement {
 	static properties = {
@@ -411,6 +415,104 @@ export default class CapCase extends LitElement {
 		}
 	}
 
+	removeLink = (a) => {
+		a.replaceWith(a.innerHTML);
+	};
+
+	doNothing = () => {};
+
+	rewriteLinks = () => {
+		this.shadowRoot.querySelectorAll("a").forEach((a) => {
+			const oldLink = a.getAttribute("href");
+			// skip links without hrefs or that point back at the same page
+			if (!oldLink || oldLink.startsWith("#")) {
+				return;
+			}
+			const oldUrl = new URL(oldLink);
+			if (oldUrl.hostname === "cite.case.law") {
+				const pathComponents = oldUrl.pathname
+					.split("/")
+					.filter((x) => x !== ""); // remove empty strings
+				if (pathComponents.length === 3) {
+					/*
+					Case: https://cite.case.law/ill-app-3d/16/850/
+					This represents a citation to a particular page
+					where only one case starts.
+					*/
+					const [reporter, volume, page] = pathComponents;
+					//http://localhost:5501/caselaw/?reporter=ark-app&volume=12&case=0028
+					const newUrl = new URL(
+						`/caselaw/?reporter=${reporter}&volume=${volume}&case=${page.padStart(4, "0")}-01`,
+						window.location,
+					);
+					a.setAttribute("href", newUrl);
+					return;
+				} else if (pathComponents.length === 4) {
+					/*
+					Case: https://cite.case.law/mass/400/1006/880059/
+					This represents a citation to a particular page
+					where more than one case begins, so an
+					additional disambiguating suffix is added to
+					the URL. We need to translate that to the ordinal
+					number of the case on the page.
+					*/
+					const [reporter, volume, page, caseId] = pathComponents;
+
+					// First we need to load CasesMetadata for the cited case
+					new Promise((resolve, reject) => {
+						fetchCasesList(reporter, volume, (data) => {
+							try {
+								resolve(data);
+							} catch (e) {
+								console.log("Couldn't look this one up.");
+								reject(e);
+							}
+						});
+					}).then(
+						(casesList) => {
+							// find all the cases that begin on this page
+							const casesOnPage = casesList.filter(
+								(x) => x.first_page === page,
+							);
+
+							//find the index in the casesOn page of the case we're looking for
+							const index = casesOnPage.findIndex(
+								(x) => x.id.toString() === caseId,
+							);
+
+							// construct the proper link to the case
+							const newUrl = new URL(
+								`/caselaw/?reporter=${reporter}&volume=${volume}&case=${page.padStart(4, "0")}-${(index + 1).toString().padStart(2, "0")}`,
+								window.location,
+							);
+
+							///set the href of the link to the new url
+							a.setAttribute("href", newUrl);
+						},
+						(error) => {
+							// Got an error looking up the CasesMetadata. Remove the link because we can't resolve it
+							this.removeLink(a);
+							return;
+						},
+					);
+					return;
+				} else if (oldUrl.searchParams.has("q")) {
+					/*
+					Case: https://cite.case.law/citations/?q=42%20U.S.C.%20%C2%A7%201983
+					This represents a link to a statute we
+					don't actually have the copy for, so
+					instead, we do a search on other cases
+					that cite the same statute. We'll remove
+					this.
+					*/
+					this.removeLink(a);
+					return;
+				}
+			}
+			// We don't know what this url is, so leave it be.
+		});
+	};
+
 	render() {
 		/*
 		This render method uses requestAnimationFrame to alter the links in
@@ -420,20 +522,11 @@ export default class CapCase extends LitElement {
 		*/
 
 		// Skip the first frame which is the shadow DOM render
-		const doNothing = () => {};
+		window.requestAnimationFrame(this.doNothing);
 		// Rewrite the links on the second frame
-		const rewriteLinks = () => {
-			this.shadowRoot.querySelectorAll("a").forEach((a) => {
-				const oldLink = a.getAttribute("href");
-				// skip links without hrefs or that point back at the same page
-				if (!!oldLink && !oldLink.startsWith("#")) {
-					a.href = oldLink + "#todo";
-				}
-			});
-		};
-		window.requestAnimationFrame(doNothing);
-		window.requestAnimationFrame(rewriteLinks);
 		window.document.title = `${this.createCaseHeaderHeader(this.caseMetadata)} | Caselaw Access Project`;
+		window.requestAnimationFrame(this.rewriteLinks);
+
 		return html`
 			<div class="case-container">
 				<div class="case-header">

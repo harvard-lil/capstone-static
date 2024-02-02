@@ -39,9 +39,7 @@ export const fetchCaselawBody = async (
 	caseName,
 	callback,
 ) => {
-	// TODO this is a hack to get around the fact that we don't have the case ordinal yet.
-	// See: ENG-522, ENG-523, ENG-533, and ENG-558
-	const url = `${window.BUCKET_ROOT}/${reporter}/${volume}/html/${caseName}-01.html`;
+	const url = `${window.BUCKET_ROOT}/${reporter}/${volume}/html/${caseName}.html`;
 	const response = await fetch(url);
 	callback(await response.text());
 };
@@ -52,10 +50,8 @@ export const fetchCaseMetadata = async (
 	caseName,
 	callback,
 ) => {
-	// TODO this is a hack to get around the fact that we don't have the case ordinal yet.
-	// See: ENG-522, ENG-523, ENG-533, and ENG-558
-	const url = `${window.BUCKET_ROOT}/${reporter}/${volume}/cases/${caseName}-01.json`;
-	callback(await fetchJson(url));
+	const url = `${window.BUCKET_ROOT}/${reporter}/${volume}/cases/${caseName}.json`;
+	callback(await fetchJson(url)); //here return {} if it didn't fetch
 };
 
 export const fetchMapData = async (callback) => {
