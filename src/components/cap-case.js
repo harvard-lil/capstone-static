@@ -430,90 +430,45 @@ export default class CapCase extends LitElement {
 	rewriteLinks = () => {
 		this.shadowRoot.querySelectorAll("a").forEach((a) => {
 			const oldLink = a.getAttribute("href");
+			const linkType = a.getAttribute("class");
+			const casePath = a.getAttribute("data-case-paths");
+
 			// skip links without hrefs or that point back at the same page
-			if (!oldLink || oldLink.startsWith("#")) {
+			if (!oldLink || oldLink.startsWith("#") || !(linkType === "citation")) {
 				return;
 			}
-			const oldUrl = new URL(oldLink);
-			if (oldUrl.hostname === "cite.case.law") {
-				const pathComponents = oldUrl.pathname
+
+			// links without casePath are to a search page we will no longer support.
+			if (!casePath) {
+				this.removeLink(a);
+				return;
+			}
+
+			// links that have multiple possible cases need to go to a disambiguation page
+			// http://localhost:5501/caselaw/?disambiguate=%2Fus%2F351%2F0967-03%2C%2Fus%2F351%2F0967-07%2C%2Fus%2F351%2F0967-04%2C%2Fus%2F351%2F0967-02%2C%2Fus%2F351%2F0967-06%2C%2Fus%2F351%2F0967-01%2C%2Fus%2F351%2F0967-05&cite=351%20U.S.%20967
+			if (casePath.includes(",")) {
+				const newUrl = new URL(
+					`/caselaw/?disambiguate=${encodeURIComponent(casePath)}&cite=${encodeURIComponent(a.innerText)}`,
+					window.location,
+				);
+				a.setAttribute("href", newUrl);
+				return;
+			} else {
+				// a normal link to a single case
+				const pathComponents = casePath
 					.split("/")
 					// remove empty strings. Deals with paths that start
 					// or end with / and double slashes
 					.filter((x) => x !== "");
-				if (pathComponents.length === 3) {
-					/*
-					Case: /reporter/volume/page
-					E.g.: https://cite.case.law/ill-app-3d/16/850/
-					This represents a citation to a particular page
-					where only one case starts.
-					*/
-					const [reporter, volume, page] = pathComponents;
-					//http://localhost:5501/caselaw/?reporter=ark-app&volume=12&case=0028
-					const newUrl = new URL(
-						`/caselaw/?reporter=${reporter}&volume=${volume}&case=${page.padStart(4, "0")}-01`,
-						window.location,
-					);
-					a.setAttribute("href", newUrl);
-					return;
-				} else if (pathComponents.length === 4) {
-					/*
-					Case: /reporter/volume/page/caseId
-					E.g.: https://cite.case.law/mass/400/1006/880059/
-					This represents a citation to a particular page
-					where more than one case begins, so an
-					additional disambiguating suffix is added to
-					the URL. We need to translate that to the ordinal
-					number of the case on the page.
-					*/
-					const [reporter, volume, page, caseId] = pathComponents;
 
-					// First we need to load CasesMetadata for the cited case
-					new Promise((resolve, reject) => {
-						fetchCasesList(reporter, volume, (data) => {
-							try {
-								resolve(data);
-							} catch (e) {
-								reject(e);
-							}
-						});
-					}).then(
-						(casesList) => {
-							// Find the one with the correct case id
-							const citedCase = casesList.find(
-								(x) => x.id.toString() === caseId,
-							);
-
-							// construct the proper link to the case
-							const newUrl = new URL(
-								`/caselaw/?reporter=${reporter}&volume=${volume}&case=${page.padStart(4, "0")}-${citedCase.ordinal.toString().padStart(2, "0")}`,
-								window.location,
-							);
-
-							///set the href of the link to the new url
-							a.setAttribute("href", newUrl);
-						},
-						(error) => {
-							// Got an error looking up the CasesMetadata. Remove the link because we can't resolve it
-							this.removeLink(a);
-							return;
-						},
-					);
-					return;
-				} else if (oldUrl.searchParams.has("q")) {
-					/*
-					Case: https://cite.case.law/citations/?q=42%20U.S.C.%20%C2%A7%201983
-					This represents a link to a statute we
-					don't actually have the copy for, so
-					instead, we do a search on other cases
-					that cite the same statute. We'll remove
-					this.
-					*/
-					this.removeLink(a);
-					return;
-				}
+				const [reporter, volume, page] = pathComponents;
+				const newUrl = new URL(
+					`/caselaw/?reporter=${reporter}&volume=${volume}&case=${page.padStart(4, "0")}-01`,
+					window.location,
+				);
+				a.setAttribute("href", newUrl);
+				return;
 			}
-			// If we're here, we don't know what this url is, so leave it be.
 		});
 	};
 

@@ -4,6 +4,7 @@ import "./cap-volume.js";
 import "./cap-case.js";
 import "./cap-jurisdictions.js";
 import "./cap-reporter.js";
+import "./cap-disambiguate.js";
 
 export default class CapContentRouter extends LitElement {
 	static styles = [
@@ -24,6 +25,15 @@ export default class CapContentRouter extends LitElement {
 		const reporter = searchParams.get("reporter");
 		const volume = searchParams.get("volume");
 		const caseName = searchParams.get("case");
+		const disambiguate = searchParams.get("disambiguate");
+		const cite = searchParams.get("cite");
+
+		if (!!disambiguate) {
+			return html`<cap-disambiguate
+				list="${disambiguate},"
+				cite=${cite}
+			></cap-disambiguate>`;
+		}
 
 		if (!!caseName && !!volume && !!reporter) {
 			return html`<cap-case
