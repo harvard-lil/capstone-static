@@ -371,6 +371,29 @@ export default class CapCase extends LitElement {
 					(data) => (this.caseMetadata = data),
 				),
 		);
+		window.addEventListener("hashchange", this.handleHashChange.bind(this));
+	}
+
+	disconnectedCallback() {
+		super.disconnectedCallback();
+		window.removeEventListener("hashchange", this.handleHashChange.bind(this));
+	}
+
+	updated() {
+		// if a person navigates directly to a URL with a hash, handle it on load
+		this.handleHashChange();
+	}
+
+	handleHashChange() {
+		const hash = window.location.hash.substring(1); // remove the '#'
+		if (hash) {
+			const element = this.shadowRoot.getElementById(hash);
+			if (element) {
+				element.tabIndex = -1;
+				element.scrollIntoView();
+				element.focus();
+			}
+		}
 	}
 
 	getYearFromDate(str) {
