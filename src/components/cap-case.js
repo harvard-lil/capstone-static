@@ -445,7 +445,7 @@ export default class CapCase extends LitElement {
 			}
 
 			// links that have multiple possible cases need to go to a disambiguation page
-			// http://localhost:5501/caselaw/?disambiguate=%2Fus%2F351%2F0967-03%2C%2Fus%2F351%2F0967-07%2C%2Fus%2F351%2F0967-04%2C%2Fus%2F351%2F0967-02%2C%2Fus%2F351%2F0967-06%2C%2Fus%2F351%2F0967-01%2C%2Fus%2F351%2F0967-05&cite=351%20U.S.%20967
+			// http://localhost:5501/caselaw/?disambiguate=%2Fill-app%2F302%2F0570-02%2C%2Fill-app%2F302%2F0570-01&cite=302%20Ill%20App%20570
 			if (casePath.includes(",")) {
 				const newUrl = new URL(
 					`/caselaw/?disambiguate=${encodeURIComponent(casePath)}&cite=${encodeURIComponent(a.innerText)}`,
