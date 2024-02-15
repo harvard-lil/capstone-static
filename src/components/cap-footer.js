@@ -127,7 +127,7 @@ export class CapFooter extends LitElement {
 				</div>
 
 				<p class="footer__copyrightNotice">
-					Site text is licensed <a class="footer__textLink footer__textLink--emphasis" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0<a>. <a class="footer__textLink footer__textLink--emphasis" href="https://github.com/harvard-lil/capstone">Source code</a> is MIT licensed.
+					Site text is licensed <a class="footer__textLink footer__textLink--emphasis" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0<a>. <a class="footer__textLink footer__textLink--emphasis" href="https://github.com/harvard-lil/capstone-static">Source code</a> is MIT licensed.
 					Harvard asserts no copyright in caselaw retrieved from this site.
 					©2024 The President and Fellows of Harvard University.
 				</p>
