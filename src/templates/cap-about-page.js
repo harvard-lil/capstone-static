@@ -184,7 +184,9 @@ export class CapAboutPage extends LitElement {
 		if (hash) {
 			const element = this.shadowRoot.getElementById(hash);
 			if (element) {
-				element.scrollIntoView();
+				// wait a beat for things to draw.
+				window.requestAnimationFrame(() => {});
+				window.requestAnimationFrame(() => element.scrollIntoView());
 			}
 		}
 	}
@@ -236,7 +238,9 @@ export class CapAboutPage extends LitElement {
 					<h2 class="interiorMain__decorator" id="data-sources">
 						Data sources
 					</h2>
-					<h3>Harvard Law School Collection</h3>
+					<h3 id="harvard-law-school-collection">
+						Harvard Law School Collection
+					</h3>
 					<p>
 						We created CAP's initial collection by digitizing roughly 40 million
 						pages of court decisions contained in roughly 40,000 bound volumes
@@ -283,7 +287,7 @@ export class CapAboutPage extends LitElement {
 							copyright.
 						</li>
 					</ul>
-					<h3>Fastcase Collection</h3>
+					<h3 id="fastcase-collection">Fastcase Collection</h3>
 					<p>
 						Our collection is augmented with yearly caselaw donations courtesy
 						of
@@ -362,7 +366,7 @@ export class CapAboutPage extends LitElement {
 						Have you used Caselaw Access Project data in your research?
 						<a href="/about">Tell us about it</a>.
 					</p>
-					<h2 class="interiorMain__decorator" id="usage-and-access">
+					<h2 class="interiorMain__decorator" id="usage-access">
 						Usage and Access
 					</h2>
 					<p class="interiorMain__emphasis">
