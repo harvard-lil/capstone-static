@@ -486,7 +486,7 @@ export default class CapCase extends LitElement {
 
 				const [reporter, volume, page] = pathComponents;
 				const newUrl = new URL(
-					`/caselaw/?reporter=${reporter}&volume=${volume}&case=${page.padStart(4, "0")}-01`,
+					`/caselaw/?reporter=${reporter}&volume=${volume}&case=${page.padStart(4, "0")}`,
 					window.location,
 				);
 				a.setAttribute("href", newUrl);
