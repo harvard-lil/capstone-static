@@ -6,7 +6,7 @@ export const isEmpty = (obj) => {
 	} else if (
 		["boolean", "number", "bigint", "symbol", "function"].includes(typeof obj)
 	) {
-		throw new Error(`Unsuported type: ${typeof obj}`);
+		throw new Error(`Unsupported type: ${typeof obj}`);
 	} else {
 		return Object.keys(obj).length === 0;
 	}

@@ -43,7 +43,7 @@ test("isEmpty throws for unsupported types", (t) => {
 			isEmpty(true);
 		},
 		{
-			message: "Unsuported type: boolean",
+			message: "Unsupported type: boolean",
 		},
 	);
 	assert.throws(
@@ -51,7 +51,7 @@ test("isEmpty throws for unsupported types", (t) => {
 			isEmpty(1);
 		},
 		{
-			message: "Unsuported type: number",
+			message: "Unsupported type: number",
 		},
 	);
 	assert.throws(
@@ -59,7 +59,7 @@ test("isEmpty throws for unsupported types", (t) => {
 			isEmpty(BigInt(9007199254740991));
 		},
 		{
-			message: "Unsuported type: bigint",
+			message: "Unsupported type: bigint",
 		},
 	);
 	assert.throws(
@@ -67,7 +67,7 @@ test("isEmpty throws for unsupported types", (t) => {
 			isEmpty(Symbol("foo"));
 		},
 		{
-			message: "Unsuported type: symbol",
+			message: "Unsupported type: symbol",
 		},
 	);
 	assert.throws(
@@ -75,7 +75,7 @@ test("isEmpty throws for unsupported types", (t) => {
 			isEmpty(() => {});
 		},
 		{
-			message: "Unsuported type: function",
+			message: "Unsupported type: function",
 		},
 	);
 });
