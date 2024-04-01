@@ -9,7 +9,7 @@ export class CapNotificationBanner extends LitElement {
 				display: flex;
 				font-size: var(--font-size-100);
 				padding: var(--spacing-75);
-				background-color: var(--color-twilight);
+				background-color: var(--color-yellow);
 			}
 
 			.banner__message {
@@ -32,12 +32,12 @@ export class CapNotificationBanner extends LitElement {
 		return html`
 			<div class="banner">
 				<p class="banner__message">
-					You are currently viewing the beta version of the Caselaw Access
-					Project‘s website. The
-					<a class="banner__link" href="https://old.case.law"
-						>legacy website and API</a
-					>
-					will sunset on September 1, 2024.
+					<b>Deprecation Notice</b>: As part of the transition of Caselaw Access
+					Project data to a static state, new CAP accounts are no longer
+					available and the CAP API will be sunset on September 1, 2024. You are
+					currently viewing the beta version of the Caselaw Access Project's new
+					website. The legacy version is still available at
+					<a class="banner__link" href="https://old.case.law">old.case.law</a>.
 				</p>
 			</div>
 		`;
