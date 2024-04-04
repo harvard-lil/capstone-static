@@ -150,6 +150,10 @@ export class CapMap extends LitElement {
 		return mapping;
 	}
 
+	getFormattedNumber(number) {
+		return number.toLocaleString();
+	}
+
 	render() {
 		return html`
 			<div class="mapRegion">
@@ -166,19 +170,18 @@ export class CapMap extends LitElement {
 								: "State and Federal Totals"}
 						</h3>
 						<p class="infoBox__text">
-							${this.activeStats.caseCount}<br /><span
+							${this.getFormattedNumber(this.activeStats.caseCount)}<br /><span
 								class="infoBox__textDescriptor"
 								>Unique cases</span
 							>
 						</p>
 						<p class="infoBox__text">
-							${this.activeStats.reporterCount}<br /><span
-								class="infoBox__textDescriptor"
-								>Reporters</span
-							>
+							${this.getFormattedNumber(
+								this.activeStats.reporterCount,
+							)}<br /><span class="infoBox__textDescriptor">Reporters</span>
 						</p>
 						<p class="infoBox__text">
-							${this.activeStats.pageCount}<br /><span
+							${this.getFormattedNumber(this.activeStats.pageCount)}<br /><span
 								class="infoBox__textDescriptor"
 								>Pages scanned</span
 							>
@@ -186,22 +189,19 @@ export class CapMap extends LitElement {
 
 						<h3 class="infoBox__heading">Federal Totals</h3>
 						<p class="infoBox__text">
-							${nationalCaselawStats.total.caseCount}<br /><span
-								class="infoBox__textDescriptor"
-								>Unique cases</span
-							>
+							${this.getFormattedNumber(
+								nationalCaselawStats.total.caseCount,
+							)}<br /><span class="infoBox__textDescriptor">Unique cases</span>
 						</p>
 						<p class="infoBox__text">
-							${nationalCaselawStats.total.reporterCount}<br /><span
-								class="infoBox__textDescriptor"
-								>Reporters</span
-							>
+							${this.getFormattedNumber(
+								nationalCaselawStats.total.reporterCount,
+							)}<br /><span class="infoBox__textDescriptor">Reporters</span>
 						</p>
 						<p class="infoBox__text">
-							${nationalCaselawStats.total.pageCount}<br /><span
-								class="infoBox__textDescriptor"
-								>Pages scanned</span
-							>
+							${this.getFormattedNumber(
+								nationalCaselawStats.total.pageCount,
+							)}<br /><span class="infoBox__textDescriptor">Pages scanned</span>
 						</p>
 					</div>
 
