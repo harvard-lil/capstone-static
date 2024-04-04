@@ -59,12 +59,12 @@ export const mapAbbreviations = [
 ];
 
 export const nationalCaselawStats = {
-	total: {
+	state: {
 		caseCount: 6930777,
 		reporterCount: 612,
 		pageCount: 36357668,
 	},
-	state: {
+	total: {
 		caseCount: 1842484,
 		reporterCount: 75,
 		pageCount: 10409741,
