@@ -251,10 +251,10 @@ export class CapAboutPage extends LitElement {
 							>Caselaw Access Project documentary</a
 						>
 						details the project's origins and demonstrates the scanning process
-						in action. Or you can read former director Adam Ziegler's blog post,
+						in action. Or read former director Adam Ziegler's blog post,
 						<a
 							href="https://www.lawnext.com/2024/03/guest-post-the-caselaw-access-project-then-now-tomorrow.html"
-							>The Caselaw Access Project — Then, Now, Tomorrow"</a
+							>The Caselaw Access Project — Then, Now, Tomorrow,"</a
 						>
 						to learn more about the impact of equitable access to caselaw.
 					</p>
