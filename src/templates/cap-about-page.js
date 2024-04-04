@@ -213,6 +213,52 @@ export class CapAboutPage extends LitElement {
 					<cap-anchor-list .data=${anchorLinks}></cap-anchor-list>
 				</aside>
 				<article class="interiorMain__article">
+					<h2
+						class="interiorMain__decorator"
+						id="history-of-the-caselaw-access-project"
+					>
+						History of the Caselaw Access Project
+					</h2>
+					<p>
+						The Caselaw Access Project scanned the entirety of the Harvard Law
+						School Library's physical collection of American case law and made
+						it machine-readable in a consistent format available online. This
+						process was funded in part by an industry partner who worked with us
+						for the first few years post-digitization to provide access to the
+						data to researchers and the public, rather than other commercial
+						entities. To facilitate that agreement, the Library Innovation Lab
+						(LIL) maintained the case.law website as the primary access point
+						for the data. Those agreements have now expired, and there is no
+						longer a need to have any form of metered access to the data.
+					</p>
+
+					<p>
+						LIL is primarily a research organization — working to investigate
+						new ways of accessing, interacting with, and creating knowledge. To
+						create more room for our team to do exploratory work, and to
+						consolidate efforts, we've transitioned case.law to a static state
+						and started partnerships with other organizations in the open legal
+						data space to shepherd this data into its next phase. You'll see at
+						various points on the site how to access the data in a variety of
+						ways going forward. Until September 2024 you can also still visit
+						<a href="https://old.case.law/">old.case.law</a> to use the previous
+						version of the site.
+					</p>
+
+					<p>
+						If you'd like to hear more, the
+						<a href="https://vimeo.com/922493882"
+							>Caselaw Access Project documentary</a
+						>
+						details the project's origins and demonstrates the scanning process
+						in action. Or you can read former director Adam Ziegler's blog post,
+						<a
+							href="https://www.lawnext.com/2024/03/guest-post-the-caselaw-access-project-then-now-tomorrow.html"
+							>The Caselaw Access Project — Then, Now, Tomorrow"</a
+						>
+						to learn more about the impact of equitable access to caselaw.
+					</p>
+
 					<h2 class="interiorMain__decorator" id="what-data-do-we-have">
 						What data do we have?
 					</h2>
