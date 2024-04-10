@@ -7,6 +7,32 @@ class CapNav extends LitElement {
 	static styles = [
 		baseStyles,
 		css`
+			.searchInterstitial {
+				max-inline-size: min(90vw, 60ch);
+				max-block-size: min(80vh, 100%);
+				max-block-size: min(80dvb, 100%);
+				overflow: hidden;
+				background-color: var(--color-beige);
+				position: fixed;
+				margin: auto;
+				inset: 0;
+				padding: 0;
+				padding-inline: var(--spacing-500);
+				padding-block-start: var(--spacing-300);
+				padding-block-end: var(--spacing-300);
+				border: 0;
+			}
+			.searchInterstitial::backdrop {
+				background-color: var(--color-gray-600);
+				opacity: 0.7;
+			}
+			.searchInterstitial * + * {
+				margin-block-start: var(--spacing-100);
+
+				@media (min-width: 35rem) {
+					margin-block-start: var(--spacing-200);
+				}
+			}
 			.header {
 				position: relative;
 			}
@@ -144,67 +170,102 @@ class CapNav extends LitElement {
 		}
 	}
 
+	_openSearchInterstitial(event) {
+		event.preventDefault();
+
+		const searchInterstitial = this.shadowRoot.querySelector(
+			".searchInterstitial",
+		);
+		searchInterstitial.showModal();
+	}
+
 	render() {
 		return html`
-			<header class="header">
-				<nav class="nav">
-					<a href="/">
-						<cap-logo></cap-logo>
-						<span class="u-visuallyHidden">Caselaw Access Project</span></a
-					>
-
-					<button
-						class="nav__mobileMenuToggle"
-						aria-haspopup="menu"
-						aria-expanded="false"
-						@click="${this._handleMenuToggle}"
-					>
-						<span class="u-visuallyHidden"> Menu </span>
-
-						<svg
-							class="nav__mobileMenuIcon"
-							aria-hidden="true"
-							width="25"
-							height="18"
-							viewBox="0 0 25 18"
-							fill="none"
-							xmlns="http://www.w3.org/2000/svg"
+			<div>
+				<dialog class="searchInterstitial">
+					<h2>Search at CourtListener</h2>
+					<p>Goodbye for now!</p>
+					<p>
+						All use restrictions for the Caselaw Access Project’s data have
+						officially been lifted. To consolidate efforts and make space for
+						future projects at the Library Innovation Lab, we have partnered
+						with our good friends at CourtListener to provide search for the
+						corpus.
+					</p>
+					<p>
+						<a href="https://www.courtlistener.com/opinion/">
+							Proceed to CourtListener
+						</a>
+					</p>
+				</dialog>
+				<header class="header">
+					<nav class="nav">
+						<a href="/">
+							<cap-logo></cap-logo>
+							<span class="u-visuallyHidden">Caselaw Access Project</span></a
 						>
-							<path
-								class="nav__mobileMenuPath nav__mobileMenuPath--top"
-								fill-rule="evenodd"
-								clip-rule="evenodd"
-								d="M8.74228e-08 0.999998C1.35705e-07 0.447713 0.447716 -2.14643e-06 1 -2.09815e-06L24 -8.74228e-08C24.5523 -3.91405e-08 25 0.447715 25 1V1C25 1.55228 24.5523 2 24 2L1 2C0.447715 2 3.91405e-08 1.55228 8.74228e-08 0.999998V0.999998Z"
-								fill="currentColor"
-							/>
-							<path
-								class="nav__mobileMenuPath nav__mobileMenuPath--middle"
-								fill-rule="evenodd"
-								clip-rule="evenodd"
-								d="M8.74228e-08 9C1.35705e-07 8.44771 0.447716 8 1 8L24 8C24.5523 8 25 8.44772 25 9V9C25 9.55228 24.5523 10 24 10L1 10C0.447715 10 3.91405e-08 9.55228 8.74228e-08 9V9Z"
-								fill="currentColor"
-							/>
-							<path
-								class="nav__mobileMenuPath nav__mobileMenuPath--bottom"
-								fill-rule="evenodd"
-								clip-rule="evenodd"
-								d="M8.74228e-08 17C1.35705e-07 16.4477 0.447716 16 1 16L24 16C24.5523 16 25 16.4477 25 17V17C25 17.5523 24.5523 18 24 18L1 18C0.447715 18 3.91405e-08 17.5523 8.74228e-08 17V17Z"
-								fill="currentColor"
-							/>
-						</svg>
-					</button>
 
-					<ul class="nav__list">
-						${navLinks.map((link) => {
-							return html`
-								<li class="nav__item" tab>
-									<a class="nav__link" href="${link.path}">${link.name}</a>
-								</li>
-							`;
-						})}
-					</ul>
-				</nav>
-			</header>
+						<button
+							class="nav__mobileMenuToggle"
+							aria-haspopup="menu"
+							aria-expanded="false"
+							@click="${this._handleMenuToggle}"
+						>
+							<span class="u-visuallyHidden"> Menu </span>
+
+							<svg
+								class="nav__mobileMenuIcon"
+								aria-hidden="true"
+								width="25"
+								height="18"
+								viewBox="0 0 25 18"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									class="nav__mobileMenuPath nav__mobileMenuPath--top"
+									fill-rule="evenodd"
+									clip-rule="evenodd"
+									d="M8.74228e-08 0.999998C1.35705e-07 0.447713 0.447716 -2.14643e-06 1 -2.09815e-06L24 -8.74228e-08C24.5523 -3.91405e-08 25 0.447715 25 1V1C25 1.55228 24.5523 2 24 2L1 2C0.447715 2 3.91405e-08 1.55228 8.74228e-08 0.999998V0.999998Z"
+									fill="currentColor"
+								/>
+								<path
+									class="nav__mobileMenuPath nav__mobileMenuPath--middle"
+									fill-rule="evenodd"
+									clip-rule="evenodd"
+									d="M8.74228e-08 9C1.35705e-07 8.44771 0.447716 8 1 8L24 8C24.5523 8 25 8.44772 25 9V9C25 9.55228 24.5523 10 24 10L1 10C0.447715 10 3.91405e-08 9.55228 8.74228e-08 9V9Z"
+									fill="currentColor"
+								/>
+								<path
+									class="nav__mobileMenuPath nav__mobileMenuPath--bottom"
+									fill-rule="evenodd"
+									clip-rule="evenodd"
+									d="M8.74228e-08 17C1.35705e-07 16.4477 0.447716 16 1 16L24 16C24.5523 16 25 16.4477 25 17V17C25 17.5523 24.5523 18 24 18L1 18C0.447715 18 3.91405e-08 17.5523 8.74228e-08 17V17Z"
+									fill="currentColor"
+								/>
+							</svg>
+						</button>
+
+						<ul class="nav__list">
+							<li class="nav__item" tab>
+								<a
+									class="nav__link"
+									@click="${this._openSearchInterstitial}"
+									href="https://www.courtlistener.com/opinion/"
+									>Search</a
+								>
+							</li>
+							${navLinks.map((link) => {
+								return html`
+									<li class="nav__item" tab>
+										<a class="nav__link" href="${link.path}">${link.name}</a>
+									</li>
+								`;
+							})}
+						</ul>
+					</nav>
+				</header>
+			</div>
 		`;
 	}
 }
