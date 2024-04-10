@@ -186,7 +186,7 @@ class CapNav extends LitElement {
 					<h2>Search at CourtListener</h2>
 					<p>Goodbye for now!</p>
 					<p>
-						All use restrictions for the Caselaw Access Project's data have
+						All use restrictions for the Caselaw Access Project’s data have
 						officially been lifted. To consolidate efforts and make space for
 						future projects at the Library Innovation Lab, we have partnered
 						with our good friends at CourtListener to provide search for the
