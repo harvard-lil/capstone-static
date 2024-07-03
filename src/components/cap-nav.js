@@ -44,6 +44,11 @@ class CapNav extends LitElement {
 				border: none;
 				padding: var(--padding);
 				cursor: pointer;
+
+				&:hover,
+				&:focus {
+					color: var(--color-purple-300);
+				}
 			}
 
 			.searchInterstitial__button,
@@ -52,7 +57,7 @@ class CapNav extends LitElement {
 			}
 
 			.searchInterstitial__icon {
-				color: var(--color-gray-600);
+				color: inherit;
 			}
 
 			.header {
