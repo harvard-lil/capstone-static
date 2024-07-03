@@ -212,7 +212,6 @@ class CapNav extends LitElement {
 
 	_openSearchInterstitial() {
 		this.searchInterstitial.showModal();
-		console.log(this.butts);
 	}
 
 	_closeSearchInterstitial() {
