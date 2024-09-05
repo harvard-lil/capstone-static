@@ -497,7 +497,7 @@ export default class CapCase extends LitElement {
 			return html`
 				<a
 					href="${window.BUCKET_ROOT}/${this.reporter}/${this
-						.volume}.pdf#page=${this.caseMetadata.first_page_order}"
+						.volume}/case-pdfs/${this.case}.pdf"
 					>View scanned PDF</a
 				>
 			`;
