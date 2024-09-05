@@ -32,12 +32,15 @@ export class CapNotificationBanner extends LitElement {
 		return html`
 			<div class="banner">
 				<p class="banner__message">
-					<b>Deprecation Notice</b>: As part of the transition of Caselaw Access
-					Project data to a static state, new CAP accounts are no longer
-					available and the CAP API will be sunset on September 1, 2024. You are
-					currently viewing the beta version of the Caselaw Access Project's new
-					website. The legacy version is still available at
-					<a class="banner__link" href="https://old.case.law">old.case.law</a>.
+					<b>Notice</b>: As part of the full public release of CAP data,
+					the CAP API and interactive search tool were sunset on September 5,
+					2024. Full case data continues to be available for
+					<a class="banner__link" href="https://case.law/caselaw/">browsing
+					on our site</a>, and search and API access are available through the
+					Free Law Project at <a class="banner__link"
+					href="https://www.courtlistener.com/">CourtListener.com</a>.
+					See our <a class="banner__link" href="https://case.law/docs/">docs</a>
+					for details.
 				</p>
 			</div>
 		`;
