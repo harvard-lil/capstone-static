@@ -32,13 +32,20 @@ export class CapNotificationBanner extends LitElement {
 		return html`
 			<div class="banner">
 				<p class="banner__message">
-					<b>Notice</b>: As part of the full public release of CAP data,
-					the CAP API and search tool were sunset on September 5,
-					2024. Full case data continues to be available for
-					<a class="banner__link" href="https://case.law/caselaw/">browsing</a> and for <a class="banner__link" href="https://static.case.law/">bulk download</a> on our site, and search and API access are available through the
-					Free Law Project at <a class="banner__link"
-					href="https://www.courtlistener.com/">CourtListener.com</a>.
-					See our <a class="banner__link" href="https://case.law/docs/">docs</a>
+					<b>Notice</b>: As part of the full public release of CAP data, the CAP
+					API and search tool were sunset on September 5, 2024. Full case data
+					continues to be available for
+					<a class="banner__link" href="https://case.law/caselaw/">browsing</a>
+					and for
+					<a class="banner__link" href="https://static.case.law/"
+						>bulk download</a
+					>
+					on our site, and search and API access are available through the Free
+					Law Project at
+					<a class="banner__link" href="https://www.courtlistener.com/"
+						>CourtListener.com</a
+					>. See our
+					<a class="banner__link" href="https://case.law/docs/">docs</a>
 					for details.
 				</p>
 			</div>
